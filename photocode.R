@@ -5,7 +5,7 @@ library(ggplot2)
 library(nlme)
 library(emmeans)
 
-pho <- read.csv("C:\\Users\\sarah\\Documents\\Means.csv", header= T)
+pho <- read.csv("C:\\Users\\sarah\\Documents\\GitHub\\fly_photos\\Means.csv", header= T)
 pho$Gen <- Gen <- as.character(pho$Gen)
 for (i in 1:550){
   if (pho$Trident[i] <= 0){
