@@ -6,16 +6,15 @@ library(nlme)
 library(emmeans)
 
 pho <- read.csv("C:\\Users\\sarah\\Documents\\GitHub\\fly_photos\\Means.csv", header= T)
-pho$Gen <- Gen <- as.character(pho$Gen)
-for (i in 1:550){
-  if (pho$Trident[i] <= 0){
-    pho$Trident[i] = 0
-  } 
-}
+pho$Gen <- Gen <- as.factor(pho$Gen)
 
+pho[,3] <- pho$Trident/255
 
-fit1 <- aov(Trident ~ Gen, data = pho)
+fit1 <- betareg(V3 ~ Gen, data = pho)
 summary(fit1)
+
+em <- emmeans(fit1, ~Gen)
+pairs(em, simple = "Gen")
 
 #             Df Sum Sq Mean Sq F value   Pr(>F)    
 #Gen           2   3488  1743.8   9.735 0.000107 ***
@@ -37,6 +36,11 @@ TukeyHSD(fit1)
 
 #Graph
 #ggraptR(pho)
+ggplot(pho, aes(x=Gen,y=Trident)) + 
+  geom_boxplot() + 
+  scale_y_reverse() + 
+  theme_classic(base_size = 40) + xlab("Generation") + ylab("Color") 
+
 ggplot(pho, aes(y=Trident, x=as.factor(as.numeric(Gen)))) + 
   geom_boxplot(stat="boxplot", position="dodge", alpha=0.5, width=0.2) + 
   theme_classic() + xlab("Generation") + ylab("Grey Scale Value")
