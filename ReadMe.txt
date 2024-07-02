@@ -1,4 +1,4 @@
-# Storage of Fly Photos from Julia Saltz Lab
+Storage of Fly Photos from Julia Saltz Lab
 
 Folders:
  
